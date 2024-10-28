@@ -1,0 +1,13 @@
+syntax = "v1"
+
+info (
+    title: "Hello World API"
+    desc: "一个简单的Hello World服务"
+    author: "demo"
+    version: "v1"
+)
+
+service hello-api {
+    @handler Hello
+    get /hello returns (string)
+}
