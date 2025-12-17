@@ -2,14 +2,31 @@ package main
 
 import (
 	"fmt"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/btcsuite/btcutil/base58"
+	"github.com/google/uuid"
+	"math/rand"
 )
 
 func main() {
-	plainPassword := "fanyo_1234"
-	hashed, err := bcrypt.GenerateFromPassword([]byte(plainPassword), bcrypt.DefaultCost)
+	str := UuidBase58()
+	fmt.Println(str)
+}
+
+func UuidBase58() string {
+	var oid []byte
+	orderId, err := uuid.NewUUID()
 	if err != nil {
-		// handle error
+		oid = RandByte(16)
+	} else {
+		oid, _ = orderId.MarshalBinary()
 	}
-	fmt.Println(string(hashed))
+	return base58.Encode(oid)
+}
+
+func RandByte(num int) []byte {
+	var key []byte
+	for i := 0; i < num; i++ {
+		key = append(key, uint8(rand.Intn(256)))
+	}
+	return key
 }
